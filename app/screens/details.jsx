@@ -5,7 +5,7 @@ import { ShoppingCartIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
-import NavBar from "./components/navbar";
+import NavBar from "./navbar";
 const Details = () => {
   const router = useRouter();
   const product = useLocalSearchParams();

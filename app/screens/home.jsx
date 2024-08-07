@@ -20,7 +20,7 @@ import {
   incrementQuantity,
   decrementQuantity,
 } from "../../redux/CartReducer";
-import Navbar from "./components/navbar";
+import Navbar from "./navbar";
 
 const products = [
   {
