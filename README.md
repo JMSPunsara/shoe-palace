@@ -20,6 +20,7 @@ npx expo start -c
 7. Handling out of stock items
 
 ---
+<p style="text-align:right">⏱️ Wait GIF 🎁 are Loading...</p>
 
 ## 👉 Product List
 
