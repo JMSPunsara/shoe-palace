@@ -221,7 +221,7 @@ const Product = ({
     currency: product.price.currency,
     sizes: product.sizes,
     stockStatus: product.stockStatus,
-    colour: product.color,
+    colour: product.colour,
     description: product.description,
     quantity: 1,
   };
