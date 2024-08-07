@@ -191,7 +191,7 @@ const NewNavBar = () => {
     <View className="flex-row justify-between items-center px-4 py-4 bg-gray-800">
       <Text className="text-white text-xl font-bold">MyApp</Text>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push("./screens/cart")}>
         <View className="relative">
           <ShoppingCartIcon name="shopping-cart" color="white" size={28} />
           <View className="absolute flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2">
