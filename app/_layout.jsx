@@ -3,8 +3,6 @@ import { SplashScreen, Stack } from "expo-router";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 
-SplashScreen.preventAutoHideAsync();
-
 const RootLayout = () => {
   return (
     /* first way of renderring something incide */

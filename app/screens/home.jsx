@@ -20,7 +20,7 @@ import {
   incrementQuantity,
   decrementQuantity,
 } from "../../redux/CartReducer";
-import Navbar from "./navbar";
+import Navbar from "./components/navbar";
 
 const products = [
   {
@@ -103,7 +103,7 @@ const products = [
       currency: "GBP",
     },
     sizes: ["8", "9", "10", "11"],
-    stockStatus: "IN STOCK",
+    stockStatus: "OUT OF STOCK",
     colour: "black",
     description:
       "Originally the running shoe of 1986, the PUMA RS100 Opulence features a retro running look that is a blast from the past. Featuring R-System cushioning for excellent impact protection, this shoe has a leather, nubuck, and nylon upper and a polyurethane midsole. The rubber outsole increases durability. Includes reflective shoe laces.",
@@ -120,7 +120,7 @@ const products = [
       currency: "GBP",
     },
     sizes: ["8", "9", "10", "11"],
-    stockStatus: "IN STOCK",
+    stockStatus: "OUT OF STOCK",
     colour: "black",
     description:
       "Take it to the next level of comfort and style when you wear the Nike Air Max Wright casual shoe. This low-profile kick is perfect for your feet, creating an innovative fashion without compromising function. The upper is leather and synthetic, the heel has a visible Air-Max unit and the outsole is made of rubber for secure traction. Wt. 18.1 oz.",
@@ -169,7 +169,6 @@ const column_width = screen_width / numColumns;
 const Home = () => {
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-  console.log(cart);
 
   const addItemToCart = (item) => {
     dispatch(addToCart(item));
@@ -243,33 +242,46 @@ const Product = ({
               {product.name.substring(0, 10) + "..."}
             </Text>
             <View className="flex-row justify-between">
-              <Text className="text-dark font-bold">{`${product.price.currency} ${product.price.amount}`}</Text>
-              {/* adding to cart works here */}
-              {cart.some((value) => value.id === product.id) ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    removeItemFromCart(selectedProduct);
-                    console.log(cart);
-                  }}
-                >
-                  <View className="border border-[red] rounded-lg p-1">
-                    <ShoppingCartIcon color="red" size={25}></ShoppingCartIcon>
-                  </View>
-                </TouchableOpacity>
+              {product.stockStatus === "OUT OF STOCK" ? (
+                <Text className="text-yellow-500 font-bold">OUT OF STOCK</Text>
               ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    addItemToCart(selectedProduct);
-                    console.log(cart);
-                  }}
-                >
-                  <View className="shadow-lg border rounded-lg p-1">
-                    <ShoppingCartIcon
-                      color="black"
-                      size={25}
-                    ></ShoppingCartIcon>
-                  </View>
-                </TouchableOpacity>
+                <Text className="text-dark font-bold">{`${product.price.currency} ${product.price.amount}`}</Text>
+              )}
+              {/* adding to cart works here */}
+              {product.stockStatus === "IN STOCK" ? (
+                cart.some((value) => value.id === product.id) ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      removeItemFromCart(selectedProduct);
+                      console.log(cart);
+                    }}
+                  >
+                    <View className="border border-[red] rounded-lg p-1">
+                      <ShoppingCartIcon
+                        color="red"
+                        size={25}
+                      ></ShoppingCartIcon>
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      addItemToCart(selectedProduct);
+                      console.log(cart);
+                    }}
+                  >
+                    <View className="shadow-lg border rounded-lg p-1">
+                      <ShoppingCartIcon
+                        color="black"
+                        size={25}
+                      ></ShoppingCartIcon>
+                    </View>
+                  </TouchableOpacity>
+                )
+              ) : (
+                <View className="border border-[red] rounded-lg p-1 ">
+                  <ShoppingCartIcon color="red" size={25}></ShoppingCartIcon>
+                </View>
               )}
             </View>
           </View>

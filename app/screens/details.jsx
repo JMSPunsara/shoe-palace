@@ -5,11 +5,11 @@ import { ShoppingCartIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
-import NavBar from "./navbar";
+import NavBar from "./components/navbar";
 const Details = () => {
   const router = useRouter();
   const product = useLocalSearchParams();
-  console.log(product);
+
   return (
     <View className="flex-1 bg-white">
       <StatusBar style="auto" />

@@ -3,7 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ShoppingCartIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
-import NavBar from "./navbar";
+import NavBar from "./components/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
