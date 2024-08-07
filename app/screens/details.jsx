@@ -55,7 +55,7 @@ const Details = () => {
             <TouchableOpacity
               className="mt-4 bg-red-500 p-3 rounded-lg"
               onPress={() => {
-                // Add to cart functionality here
+                // remove cart functionality here
                 removeItemFromCart(product);
               }}
             >

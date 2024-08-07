@@ -5,6 +5,7 @@ export const cartSlice = createSlice({
   initialState: {
     cart: [],
   },
+  // creating reducers for the cart functionalities
   reducers: {
     addToCart: (state, action) => {
       const itemInCart = state.cart.find(

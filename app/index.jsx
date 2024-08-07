@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { View, ActivityIndicator } from "react-native";
 
 const App = () => {
+  // fetching data
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +33,7 @@ const App = () => {
       </View>
     );
   }
-
+  // passing data tot the home screen
   return <Home products={products}></Home>;
 };
 

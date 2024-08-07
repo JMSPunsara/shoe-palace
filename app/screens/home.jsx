@@ -13,6 +13,7 @@ const screen_width = Dimensions.get("window").width;
 const column_width = screen_width / numColumns;
 
 const Home = ({ products }) => {
+  // implementing the redux cart and functionalities
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
 
