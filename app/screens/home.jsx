@@ -8,13 +8,19 @@ import {
   RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-
 import { Image } from "react-native";
-
 import { ShoppingCartIcon } from "react-native-heroicons/outline";
-
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  addToCart,
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+} from "../../redux/CartReducer";
+import Navbar from "./components/navbar";
 
 const products = [
   {
@@ -161,11 +167,21 @@ const screen_width = Dimensions.get("window").width;
 const column_width = screen_width / numColumns;
 
 const Home = () => {
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
+  console.log(cart);
+
+  const addItemToCart = (item) => {
+    dispatch(addToCart(item));
+  };
+  const removeItemFromCart = (item) => {
+    dispatch(removeFromCart(item));
+  };
   return (
     <View className="flex-[1] bg-white">
       <StatusBar style="auto" />
       <SafeAreaView></SafeAreaView>
-      <NewNavBar></NewNavBar>
+      <Navbar></Navbar>
       <FlatList
         data={products}
         numColumns={2}
@@ -175,36 +191,28 @@ const Home = () => {
               column_width={column_width}
               product={product_data.item}
               onPress={() => {}}
+              cart={cart}
+              addItemToCart={addItemToCart}
+              removeItemFromCart={removeItemFromCart}
             ></Product>
           );
         }}
         keyExtractor={(item) => {
-          return item.key;
+          return item.id;
         }}
       ></FlatList>
     </View>
   );
 };
 
-const NewNavBar = () => {
-  return (
-    <View className="flex-row justify-between items-center px-4 py-4 bg-gray-800">
-      <Text className="text-white text-xl font-bold">MyApp</Text>
-
-      <TouchableOpacity onPress={() => router.push("./screens/cart")}>
-        <View className="relative">
-          <ShoppingCartIcon name="shopping-cart" color="white" size={28} />
-          <View className="absolute flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2">
-            <Text>20</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const Product = ({ product, column_width }) => {
-  const minimizedProduct = {
+const Product = ({
+  product,
+  column_width,
+  cart,
+  addItemToCart,
+  removeItemFromCart,
+}) => {
+  const selectedProduct = {
     id: product.id,
     SKU: product.SKU,
     name: product.name,
@@ -216,11 +224,12 @@ const Product = ({ product, column_width }) => {
     stockStatus: product.stockStatus,
     colour: product.color,
     description: product.description,
+    quantity: 1,
   };
 
   return (
     <TouchableOpacity>
-      <Link href={{ pathname: "screens/details", params: minimizedProduct }}>
+      <Link href={{ pathname: "screens/details", params: selectedProduct }}>
         <View>
           <View
             style={{ width: column_width - 10 }}
@@ -235,11 +244,33 @@ const Product = ({ product, column_width }) => {
             </Text>
             <View className="flex-row justify-between">
               <Text className="text-dark font-bold">{`${product.price.currency} ${product.price.amount}`}</Text>
-              <TouchableOpacity>
-                <View className="shadow-lg border rounded-lg p-1">
-                  <ShoppingCartIcon color="black" size={25}></ShoppingCartIcon>
-                </View>
-              </TouchableOpacity>
+              {/* adding to cart works here */}
+              {cart.some((value) => value.id === product.id) ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    removeItemFromCart(selectedProduct);
+                    console.log(cart);
+                  }}
+                >
+                  <View className="border border-[red] rounded-lg p-1">
+                    <ShoppingCartIcon color="red" size={25}></ShoppingCartIcon>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    addItemToCart(selectedProduct);
+                    console.log(cart);
+                  }}
+                >
+                  <View className="shadow-lg border rounded-lg p-1">
+                    <ShoppingCartIcon
+                      color="black"
+                      size={25}
+                    ></ShoppingCartIcon>
+                  </View>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>
